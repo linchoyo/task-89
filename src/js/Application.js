@@ -29,21 +29,21 @@ export default class Application extends EventEmitter {
     return await fetch(this.apiUrl).then((response)=>{ return response.JSON(); });
     }
     
-    
-    
-
-    const box = document.createElement("div");
-    box.classList.add("box");
-    box.innerHTML = this._render({
-      name: "Placeholder",
-      terrain: "placeholder",
-      population: 0,
-    });
-
+_create() {
+  this._load().then((response) => { 
+  response.results.forEach((element) => {
+const box = document.createElement("div");
+box.classList.add("box");
+box.innerHTML = this._render({
+  name: "Placeholder",
+  terrain: "placeholder",
+  population: 0,
+});
+    this._stopLoading();
     document.body.querySelector(".main").appendChild(box);
-
-    this.emit(Application.events.READY);
-  }
+  });
+});
+}
 
   _render({ name, terrain, population }) {
     return `
